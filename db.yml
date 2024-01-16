@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      db: mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        db: mysql
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: admin
+            - name: MYSQL_ROOT_PASSWORD
+              value: admin
+          image: 'mysql:5.7'
+          name: mysql
+          ports:
+            - name: mysqlport
+              containerPort: 3306
+              protocol: TCP
+          resources:
+            requests:
+              memory: 182Mi
+            limits: 
+              memory: 182Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+    protocol: TCP
+    name: http
+  selector:
+    db: mysql
