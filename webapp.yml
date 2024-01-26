@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-app
+  name: web-app
 spec:
   selector:
     matchLabels:
-      app: test-app
+      app: web-app
   replicas: 1
   template:
     metadata:
       labels:
-        app: test-app
+        app: web-app
     spec:
       containers:
-      - name: test-app
+      - name: web-app
         image: warradish/mysql-app:7
         imagePullPolicy: IfNotPresent
         ports:
@@ -22,14 +22,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-service
+  name: web-service
 spec:
   type: NodePort
   ports:
-  - name: test-service
+  - name: web-service
     port: 80
     protocol: TCP
     targetPort: 5000
     nodePort: 30000
   selector:
-    app: test-app
+    app: web-app
