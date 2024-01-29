@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: web-app
-        image: warradish/mysql-app:17
+        image: warradish/mysql-app:18
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
